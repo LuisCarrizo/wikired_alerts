@@ -9,6 +9,8 @@ For general information about developing packages, see the Dart guide for
 [creating packages](https://dart.dev/guides/libraries/create-library-packages)
 and the Flutter guide for
 [developing packages and plugins](https://flutter.dev/developing-packages).
+
+next release: include https://pub.dev/packages/toastification
 -->
 
 # wikired_alerts
