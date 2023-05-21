@@ -1,20 +1,6 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
-
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
-
-next release: include https://pub.dev/packages/toastification
--->
-
 # wikired_alerts
-Lot of options of alerts with and without context
+
+Lot of helpers of alerts with and without context
 
 [![pub package](https://img.shields.io/badge/PUB-1.0.0-blue)](https://pub.dev/packages/wikired_alerts)
 
@@ -28,7 +14,8 @@ A library that provides a lot of options of alerts with and without context.
   - Quick Alert helpers
   - Get.SnackBar helpers
   - Native snackbar helpers
-
+  - Toastification helpers
+  
 ## Usage
 
 ### Getting started
@@ -48,6 +35,12 @@ dependencies:
 ## Screen widgets
 
 [TODO]
+
+## Aditional Info
+
+ lista de iconos
+ https://fonts.google.com/icons?selected=Material+Icons:pan_tool:
+
 
 
 ## License

@@ -1,6 +1,8 @@
 name: wikired_alerts
-description: wikired_alerts is a Flutter package with lot of options of alerts with and without context.
-version: 0.0.1
+description: wikired_alerts is a Flutter package with lot of helpers for alerts with and without context.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
 homepage:
 
 environment:
@@ -13,6 +15,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get: ^4.6.5
   quickalert: ^1.0.1
+  toastification: ^0.0.3
 
 dev_dependencies:
   flutter_test:

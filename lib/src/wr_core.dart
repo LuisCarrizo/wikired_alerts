@@ -1,29 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:quickalert/quickalert.dart';
 import 'package:get/get.dart';
-// import '/main.dart';
+import 'package:toastification/toastification.dart';
+import 'dart:math';
 
 class WrAlerts {
   // definicion de variables
-  //final BuildContext contextoGlobal = navigatorKey.currentContext!;
-  late BuildContext contextoGlobal;
-  late GlobalKey<NavigatorState> navigatorKey;
+  late BuildContext? contextoGlobal;
   static const confirmBtnText = 'OK';
 
   // constructor
-  WrAlerts(GlobalKey<NavigatorState> navKey){
-    navigatorKey = navKey;
-    contextoGlobal = navigatorKey.currentContext!;
+  WrAlerts([GlobalKey<NavigatorState>? navKey]){
+    if ( null == navKey || null == navKey.currentContext) {
+      contextoGlobal = null;
+    } else {
+      contextoGlobal = navKey.currentContext;
+    }
   }
-  //  {
-  //   contextoGlobal = context;
-  // }
 
 
   // metodos  auxiliares
-  Duration? _duration (int? time){
+  Duration? _duration (int? time , {int? defaultTime}){
     if (time == null || time == 0) {
-      return null;
+      if (defaultTime == null || defaultTime == 0) { 
+        return null;
+      } else {
+        return Duration(seconds: defaultTime);
+      }
     } else {
       return Duration(seconds: time);
     }
@@ -33,45 +36,55 @@ class WrAlerts {
   }
 
   // helpers
+
+//toastification
+
+void toast(String msg, {String title = '', bool pop = false, BuildContext? contextoOpcional ,type = "info"}) {
+  _show(msg, title: title, type: type, pop: pop , tool: 'toast' , contextoOpcional: contextoOpcional) ;
+}
+
+
   // quickAlert
   void qaError(String msg, {String title = '', bool pop = false, BuildContext? contextoOpcional ,}) {
-    _show(msg, title: title, type: "error", pop: pop , tool: 'qa') ;
+    _show(msg, title: title, type: "error", pop: pop , tool: 'qa', contextoOpcional: contextoOpcional) ;
   }
   void qaOk(String msg, {String title = '', int time = 0, bool pop = false, BuildContext? contextoOpcional ,}) {
-    _show(msg, title: title, type: "ok", time: time, pop: pop, tool: 'qa');
+    // por ahora se desabilita el autoapagado, para evitar balck screen
+    time = 0;
+    _show(msg, title: title, type: "ok", time:time, pop: pop, tool: 'qa', contextoOpcional: contextoOpcional);
   }
   void qaInfo(String msg, {String title = '', int time = 0, bool pop = false, BuildContext? contextoOpcional ,}) {
-    _show(msg, title: title, type: "info", time: time, pop: pop, tool: 'qa');
+    _show(msg, title: title, type: "info", time: time, pop: pop, tool: 'qa', contextoOpcional: contextoOpcional);
   }
   void qaAlerta(String msg,{String title = '', int time = 0, bool pop = false, BuildContext? contextoOpcional ,}) {
-    _show(msg, title: title, type: "alerta", time: time, pop: pop, tool: 'qa');
+    _show(msg, title: title, type: "alerta", time: time, pop: pop, tool: 'qa', contextoOpcional: contextoOpcional);
   }
   void qaProcesando(String msg,{String title = '', int time = 0, bool pop = false, BuildContext? contextoOpcional ,}) {
-    _show(msg, title: title, type: "procesando", time: time, pop: pop, tool: 'qa');
+    _show(msg, title: title, type: "procesando", time: time, pop: pop, tool: 'qa', contextoOpcional: contextoOpcional);
   }
   void qaCallback(String msg,{String title = '', int time = 0, bool pop = true, BuildContext? contextoOpcional ,dynamic ruta}) {
-    _show(msg, title: title, type: "callback", time: time, pop: pop, tool: 'qa' , ruta: ruta);
+    _show(msg, title: title, type: "callback", time: time, pop: pop, tool: 'qa' , ruta: ruta, contextoOpcional: contextoOpcional);
   }
-  void simpleError(String msg) {
-    _show(msg,type: 'error', tool: 'widget');
+  void simpleError(String msg,{ BuildContext? contextoOpcional }) {
+    _show(msg,type: 'error', tool: 'widget', contextoOpcional: contextoOpcional);
   }
-  void simpleOk(String msg) {
-    _show(msg,type: 'ok', tool: 'widget');
+  void simpleOk(String msg,{ BuildContext? contextoOpcional }) {
+    _show(msg,type: 'ok', tool: 'widget', contextoOpcional: contextoOpcional);
   }
-  void simpleInfo(String msg) {
-    _show(msg,type: 'info', tool: 'widget');
+  void simpleInfo(String msg,{ BuildContext? contextoOpcional }) {
+    _show(msg,type: 'info', tool: 'widget', contextoOpcional: contextoOpcional);
   }
-  void simpleAlerta(String msg) {
-    _show(msg,type: 'alerta', tool: 'widget');
+  void simpleAlerta(String msg,{ BuildContext? contextoOpcional }) {
+    _show(msg,type: 'alerta', tool: 'widget', contextoOpcional: contextoOpcional);
   }
-  void snack(String msg) {
-    _show(msg, tool: 'snack');
+  void snack(String msg,{ BuildContext? contextoOpcional }) {
+    _show(msg, tool: 'snack', contextoOpcional: contextoOpcional);
   }
-  void snackSimple(String msg) {
-    _show(msg, type:'simple', tool: 'snack');
+  void snackSimple(String msg,{ BuildContext? contextoOpcional }) {
+    _show(msg, type:'simple', tool: 'snack', contextoOpcional: contextoOpcional);
   }
-  void snackFormato(String msg, {int time = 4 }) {
-    _show(msg, type:'formato', tool: 'snack' , time: time);
+  void snackFormato(String msg, {int time = 4 , BuildContext? contextoOpcional  }) {
+    _show(msg, type:'formato', tool: 'snack' , time: time, contextoOpcional: contextoOpcional);
   }
 
   void getSnackTop(String msg, {int time = 4 ,String title ='AVISO', Widget icono = const Icon(Icons.pan_tool)}) {
@@ -90,10 +103,15 @@ class WrAlerts {
   // lista de iconos
   // https://fonts.google.com/icons?selected=Material+Icons:pan_tool:
 
-  void _get(String msg , { String tool = 'snackbar',String title ='AVISO' , int time = 5,
-  dynamic position = 'bottom', Widget icono = const Icon(Icons.pan_tool),
-  }){
-
+  void _get(
+    String msg ,{
+      String tool = 'snackbar',
+      String title ='AVISO' , 
+      int time = 5,
+      dynamic position = 'bottom', 
+      Widget icono = const Icon(Icons.pan_tool),
+    }
+  ){
     if (position == 'top') {
       position = SnackPosition.TOP;
     } else {
@@ -117,21 +135,62 @@ class WrAlerts {
 
   void _show(
       String msg, 
-      {String title = '', int time = 0, String tool = 'get', 
-      String type = 'info',bool pop = false, 
-      BuildContext? contextoOpcional , dynamic ruta,})
-    {
+        {String title = '', int time = 0, String tool = 'get', 
+        String type = 'info',bool pop = false, 
+        BuildContext? contextoOpcional , dynamic ruta,
+        }
+      ){
     try {
       // preparacion variables
       BuildContext? contexto = _contexto (contextoOpcional);
       if (contexto == null) {
         tool = 'get';
       }
-
-
       switch (tool) {
         case 'get': 
-
+          _get(msg);
+        break;
+        case 'toast': 
+          //si o si requiere el contexto
+          if (contextoOpcional == null) {
+            _get(msg);
+          } else {
+            int defaultTime = 5;
+            if (type == 'random'){
+              var list = ['ok', 'error', 'aviso', 'info'];
+              type = list.elementAt(Random().nextInt(list.length));
+            }
+            switch (type) {
+              case 'ok':
+                toastification.showSuccess(
+                  context: contextoOpcional,
+                  title: msg,
+                  autoCloseDuration:  _duration(time, defaultTime : defaultTime),
+                );
+                break;
+              case 'error':
+                toastification.showError(
+                  context: contextoOpcional,
+                  title: msg,
+                  autoCloseDuration:  _duration(time, defaultTime : 10),
+                );
+                break;
+              case 'aviso':
+                toastification.showWarning(
+                  context: contextoOpcional,
+                  title: msg,
+                  autoCloseDuration:  _duration(time, defaultTime : defaultTime),
+                );
+                break;
+              default:
+                toastification.showInfo(
+                  context: contextoOpcional,
+                  title: msg,
+                  autoCloseDuration:  _duration(time, defaultTime : defaultTime),
+                );
+                break;
+            }
+          }
         break;
 
         case 'snack':
@@ -276,8 +335,10 @@ class WrAlerts {
 
       }
     } catch (e) {
+      // ignore: avoid_print
+      print("wikired ${e.toString()}");
       msg = "Error mostrando alerta \n Código de error: ${e.toString()}";
-      Get.snackbar('Atención', msg,
+      Get.snackbar(title, msg,
         snackPosition: SnackPosition.BOTTOM,
         icon: const Icon(Icons.alarm),
         shouldIconPulse: true,
