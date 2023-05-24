@@ -14,8 +14,10 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2
   get: ^4.6.5
-  quickalert: ^1.0.1
   toastification: ^0.0.3
+  quickalert:
+    git:
+      url:https://github.com/LuisCarrizo/QuickAlert.git
 
 dev_dependencies:
   flutter_test:
