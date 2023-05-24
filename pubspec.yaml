@@ -17,7 +17,7 @@ dependencies:
   toastification: ^0.0.3
   quickalert:
     git:
-      url:https://github.com/LuisCarrizo/QuickAlert.git
+      url: https://github.com/LuisCarrizo/QuickAlert.git
 
 dev_dependencies:
   flutter_test:
