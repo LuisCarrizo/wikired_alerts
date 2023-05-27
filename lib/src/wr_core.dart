@@ -40,17 +40,15 @@ class WrAlerts {
 //toastification
 
 void toast(String msg, {String title = '', bool pop = false, BuildContext? contextoOpcional ,type = "info"}) {
-  _show(msg, title: title, type: type, pop: pop , tool: 'toast' , contextoOpcional: contextoOpcional) ;
+  _show(msg, title: title, type: type, pop: pop ,time:time, tool: 'toast' , contextoOpcional: contextoOpcional) ;
 }
 
 
   // quickAlert
-  void qaError(String msg, {String title = '', bool pop = false, BuildContext? contextoOpcional ,}) {
+  void qaError(String msg, {String title = '', bool pop = false, BuildContext? contextoOpcional ,int time = 5,}) {
     _show(msg, title: title, type: "error", pop: pop , tool: 'qa', contextoOpcional: contextoOpcional) ;
   }
   void qaOk(String msg, {String title = '', int time = 0, bool pop = false, BuildContext? contextoOpcional ,}) {
-    // por ahora se desabilita el autoapagado, para evitar balck screen
-    //time = 0;
     _show(msg, title: title, type: "ok", time:time, pop: pop, tool: 'qa', contextoOpcional: contextoOpcional);
   }
   void qaInfo(String msg, {String title = '', int time = 0, bool pop = false, BuildContext? contextoOpcional ,}) {
